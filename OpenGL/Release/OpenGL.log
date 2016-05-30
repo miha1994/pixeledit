@@ -1,0 +1,83 @@
+﻿Build started 30.05.2016 9:10:27.
+     1>Project "C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"D:\SFML-2.3.1\include" /ID:\freeglut\include /I"D:\glew-1.13.0\include" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D SFML_STATIC /D _MBCS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt picture_wind.cpp
+         picture_wind.cpp
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(194): warning C4005: 'FOR' : macro redefinition
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\fadma.h(25) : see previous definition of 'FOR'
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\hot_vars.h(54): warning C4005: 'D_' : macro redefinition
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\glob.h(12) : see previous definition of 'D_'
+     1>picture_wind.cpp(66): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(96): warning C4244: 'argument' : conversion from 'double' to 'sf::Uint8', possible loss of data
+     1>picture_wind.cpp(108): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>picture_wind.cpp(120): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>picture_wind.cpp(126): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(153): warning C4018: '<' : signed/unsigned mismatch
+     1>picture_wind.cpp(233): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(259): warning C4018: '<' : signed/unsigned mismatch
+     1>picture_wind.cpp(261): warning C4018: '<' : signed/unsigned mismatch
+     1>picture_wind.cpp(405): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(414): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(447): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(448): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(526): warning C4018: '>' : signed/unsigned mismatch
+     1>picture_wind.cpp(547): warning C4244: '=' : conversion from 'double' to 'sf::Uint8', possible loss of data
+     1>picture_wind.cpp(550): warning C4244: '*=' : conversion from 'double' to 'sf::Uint8', possible loss of data
+     1>picture_wind.cpp(604): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(612): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(620): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>picture_wind.cpp(628): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(185): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(184) : while compiling class template member function 'Vector2<T> Vector2<T>::operator *(const float)'
+                 with
+                 [
+                     T=int
+                 ]
+                 picture_wind.cpp(66) : see reference to function template instantiation 'Vector2<T> Vector2<T>::operator *(const float)' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\array_2d.h(58) : see reference to class template instantiation 'Vector2<T>' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\array_2d.h(129) : see reference to class template instantiation 'array_2d<T>' being compiled
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(190): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(189) : while compiling class template member function 'Vector2<T> Vector2<T>::operator /(const float)'
+                 with
+                 [
+                     T=int
+                 ]
+                 picture_wind.cpp(126) : see reference to function template instantiation 'Vector2<T> Vector2<T>::operator /(const float)' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Release\OpenGL.exe" /NOLOGO /LIBPATH:"D:\SFML-2.3.1\lib" /LIBPATH:D:\freeglut\lib /LIBPATH:"D:\glew-1.13.0\lib" "sfml-graphics-s.lib" "sfml-window-s.lib" "sfml-system-s.lib" "sfml-audio-s.lib" "sfml-main.lib" freeglut.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Release\OpenGL.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Release\OpenGL.lib" /MACHINE:X86 /SAFESEH Release\core.obj
+         Release\direction.obj
+         Release\fadma.obj
+         Release\glob.obj
+         Release\hot_vars.obj
+         Release\input.obj
+         Release\lodepng.obj
+         Release\main.obj
+         Release\math.obj
+         Release\object.obj
+         Release\picture_wind.obj
+         Release\pure_opengl.obj
+         Release\read_write.obj
+         Release\Renderer.obj
+         Release\rgba_array.obj
+         Release\space.obj
+         Generating code
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\object.cpp(15): warning C4715: 'new_Object' : not all control paths return a value
+         Finished generating code
+         OpenGL.vcxproj -> C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Release\OpenGL.exe
+     1>Done Building Project "C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\OpenGL\OpenGL.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:12.08

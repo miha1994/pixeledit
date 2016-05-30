@@ -1,0 +1,35 @@
+﻿Build started 29.05.2016 17:43:37.
+     1>Project "C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"D:\SFML-2.3.1\include" /ID:\freeglut\include /I"D:\glew-1.13.0\include" /ZI /nologo /W3 /WX- /Od /Oy- /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt picture_wind.cpp
+         picture_wind.cpp
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(194): warning C4005: 'FOR' : macro redefinition
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\fadma.h(25) : see previous definition of 'FOR'
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\hot_vars.h(54): warning C4005: 'D_' : macro redefinition
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\glob.h(12) : see previous definition of 'D_'
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(63): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(89): error C2677: binary '[' : no global operator found which takes type 'Vector2<T>' (or there is no acceptable conversion)
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(89): warning C4244: 'argument' : conversion from 'double' to 'sf::Uint8', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(99): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(102): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(108): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(133): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(182): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(336): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(345): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(378): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(379): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(457): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(517): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(525): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(533): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(541): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>Done Building Project "C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\OpenGL\OpenGL.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:03.77
