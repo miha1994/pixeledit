@@ -3,6 +3,8 @@
 #include "math_3d.h"
 #include <string>
 
+// весь этот модуль используется для парсинга текстовых файлов и вывода в определенном формате в файлы
+
 char read_char ();
 std::string read_string ();
 int read_int ();

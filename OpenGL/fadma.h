@@ -30,10 +30,13 @@ inline double deg_ (double radian);		// перевод угла из радиан в градусы
 #define CASE2(Value, Value2)	else if (cpy_for_switch == Value || cpy_for_switch == Value2)
 #define DEFAULT					else if (1)
 
+// минимум и максимум
 #define Max(a,b)				(((a)<(b))?(b):(a))
 #define Min(a,b)				(((a)>(b))?(b):(a))
 
 #define error(text)	do {cout << "\n\nERROR : " + string (text) + "\n"; } while (0)
+
+// вызывает ошибку деления на ноль
 #define ERR_BREAK	fadma_zero_for_err_break = (1 / fadma_zero_for_err_break)
 
 extern int fadma_zero_for_err_break;

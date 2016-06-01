@@ -6,8 +6,8 @@ Core core;
 
 void Core::init () {
 	m_current_state = State_0;
-	m_spaces["main"] = new Space ("main");
-	m_current_spaces.push_back (m_spaces["main"]);
+	m_spaces["main"] = new Space ("main");	// здесь парсится файл main_space.txt и создается основной спэйс
+	m_current_spaces.push_back (m_spaces["main"]);	// он назначается активным
 
 	m_renderer.init ();
 }

@@ -3,20 +3,24 @@
 #include "direction.h"
 #include <cctype>
 
+// множество кнопок мыши
 enum mouse {
 	MOUSE_LEFT,
 	MOUSE_RIGHT,
 	MOUSE_MIDDLE
 };
 
+// состо€ние кнопки
 class button_state {
 public:
-	bool pressed_now;
-	bool just_released;
-	bool just_pressed;
-	void _upd (bool _pressed_now);
+	bool pressed_now;  // нажата ли сейчас кнопка?
+	bool just_released;// была ли кнопка только что отпущена?
+	bool just_pressed; // была ли кнопка только что нажата?
+	void _upd (bool _pressed_now);		// обновл€ет состо€ние по заданному новому значению pressed_now пол€
 };
-#define kb_	sf::Keyboard
+#define kb_	sf::Keyboard  // более короткое название дл€ клавиатуры sfml
+
+// структура, обеспечивающа€ обработку пользовательского ввода
 struct input {
 	struct _mouse_info {
 		friend struct input;
@@ -29,7 +33,7 @@ struct input {
 				mbutton[i].just_released = false;
 			}
 		}
-	} mouse;
+	} mouse; // хранит текущее состо€ние датчиков мыши
 	struct _kb_info {
 		friend struct input;
 		button_state ctrl;
@@ -51,8 +55,8 @@ struct input {
 				_abc[i].pressed_now = false;
 			}
 		}
-	} kb;
-	void upd ();
+	} kb; // --//-- клавиатура
+	void upd (); // обновить состо€ни€ датчиков
 };
 
 extern input in;

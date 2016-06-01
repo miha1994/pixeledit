@@ -8,8 +8,11 @@
 #include "hot_vars.h"
 #include <cmath>
 
-float b_time = 0;
-int dt1000 = 0, count_ = 0;
+// некоторая статистика
+float b_time = 0;	// время с момента запуска приложения (в секундах)
+int dt1000 = 0, count_ = 0;	// count_ - количество отрисованных фреймов
+
+// 8 основных цветов (используется для панэли цветов справа
 CLR g_8_colors[8] = {
 	CLR::Black,
 	CLR::White,
@@ -20,12 +23,17 @@ CLR g_8_colors[8] = {
 	CLR::Magenta,
 	CLR::Cyan
 };
+
+// прямоугольник, описывающий наш основной квадрат
 Rect <int> g_sq_r (v2i (10,10), v2i (220, 220));
 
+// активный слой
 #define D_CUR	(m_layers[m_cur_layer])
+
+// активен ли сейчас основной квадрат? (находится ли курсор в нем?)
 #define D_ACT	g_sq_r << in.mouse.pos
 
-rgba_array lrs[20];
+rgba_array lrs[20];		// миниатюры слоев
 
 commit& commit::operator = (const commit& r) {
 	m_layers = r.m_layers;
@@ -38,10 +46,11 @@ commit& commit::operator = (const commit& r) {
 }
 
 void picture_wind::render (State state) {
-	FOR_ARRAY_2D (v, m_main_sq) {
+	FOR_ARRAY_2D (v, m_main_sq) {		// рисуем фон основного квадрата (он пригодится например если картинка содержит прозрачные места
 		m_main_sq[v] = m_bg_is_dark ? (((v.x/3 + v.y/3)%2) ? CLR (40,40,40) : CLR (20,20,20)) : (((v.x/3 + v.y/3)%2) ? CLR (240,240,240) : CLR (200,200,200));
 	}
 	
+	// если был добавлен или удален слой, то соответственно добавляем или удаляем миниатюру
 	if (m_layers_miniatures.size() != m_layers.size ()) {
 		if (m_layers_miniatures.size() < m_layers.size ()) {
 			m_layers_miniatures.push_back (rgba_array ());
@@ -51,37 +60,44 @@ void picture_wind::render (State state) {
 			m_layers_miniatures.pop_back ();
 		}
 	}
+
+	// рисуем слои в основной квадрат
 	int count = 0;
 	forstl_p (p, m_layers) {
 		m_main_sq.draw (&p, m_pos, m_scale);
-		if (m_state == PWS_U && count == m_cur_layer) {
+		if (m_state == PWS_U && count == m_cur_layer) {		// если меняем цвет выделенной области, рисуемнеявный слой цвета
 			m_main_sq.draw (&m_u_mask, m_pos, m_scale);
 		}
-		m_layers_miniatures[count].clear (CLR (0,0,0,0));
+		m_layers_miniatures[count].clear (CLR (0,0,0,0));	// не забываем про создание миниатюр
 		m_layers_miniatures[count].draw (&p, m_pos, m_scale);
 
 		++count;
 	}
+
+	// при необходимости выводим содержание буфера обмена в основной квадрат
 	if (m_draw_clipboard) {
 		m_main_sq.draw (&m_clipboard, m_pos + m_clipboard_pos * m_scale, m_scale);
 	}
 	
-	if (m_i_color_show) {
+	// при необходимости рисуем квадрат цвета на котором щас курсор
+	if (m_state == PWS_I) {
 		m_main_sq.draw (&m_i_color, m_i_color_pos);
 	}
 	
+	// сокращения для левой и правой клавишь мыши
 	button_state &left = in.mouse.mbutton[MOUSE_LEFT],
 		&right = in.mouse.mbutton[MOUSE_RIGHT];
 
-	D_ADD_SPRITE (m_bg, v2i (0,0));
-	D_ADD_SPRITE (m_main_sq, v2i (10,10));
-	D_ADD_SPRITE (m_active_colors[0], v2i(10, 0));
-	D_ADD_SPRITE (m_active_colors[1], v2i(19, 0));
-	D_ADD_SPRITE (m_color_panel, v2i (240,0));
-	D_ADD_SPRITE (m_mask_bounds, v2i (0,0));
+	// говорим рендерщику, что будем рисовать в этом кадре!
+	D_ADD_SPRITE (m_bg, v2i (0,0));		// фон
+	D_ADD_SPRITE (m_main_sq, v2i (10,10));	// основной квадрат
+	D_ADD_SPRITE (m_active_colors[0], v2i(10, 0));	// текущие
+	D_ADD_SPRITE (m_active_colors[1], v2i(19, 0));	// цвета кисти
+	D_ADD_SPRITE (m_color_panel, v2i (240,0));	// панель цветов
+	D_ADD_SPRITE (m_mask_bounds, v2i (0,0));	// границы выделяемых и выделенных областей
 	D_ADD_SPRITE (m_bounds, v2i (0,0));
 	count = 0;
-	forstl_p (p, m_layers_miniatures) {
+	forstl_p (p, m_layers_miniatures) {			// миниатюры
 		lrs[count].clear (count == m_cur_layer ? CLR::Red : CLR::Black);
 		int r, g, b, a;
 		FOR_2D (v, 22, 22) {
@@ -104,9 +120,9 @@ void picture_wind::render (State state) {
 }
 
 void picture_wind::update (State state, float dt) {
-	sf::sleep (sf::milliseconds (10));
-	b_time += dt + 0.015;
-	++count_;
+	sf::sleep (sf::milliseconds (10));	// разгружаем цпу
+	b_time += dt + 0.015;		// вычисляем статистику
+	++count_;	// статистика
 	bool dont_enter_pause = false;
 	if (m_state == PWS_PAUSE) {
 		if (in.kb.ctrl.pressed_now && in.kb['P'].just_pressed) {
@@ -116,51 +132,54 @@ void picture_wind::update (State state, float dt) {
 			return;
 		}
 	}
-	if (in.kb.escape.pressed_now) {
+	if (in.kb.escape.pressed_now) {		// нажат эскейп - выходим
 		exit (count_ / b_time);
 	}
 
+	// сокращения для левой и правой клавишь мыши
 	button_state &left = in.mouse.mbutton[MOUSE_LEFT],
 		&right = in.mouse.mbutton[MOUSE_RIGHT];
 
-	v2i pos = (in.mouse.pos - v2i (10,10) - m_pos) / m_scale;
+	v2i pos = (in.mouse.pos - v2i (10,10) - m_pos) / m_scale;	// pos - координаты пикселя, на котором находится курсор в системе координат,
+						// связанной со слоями (то есть по сути это координаты пикселя слоя, который перекрасится, если нажать на него сейчас кистью)
+
 	///////////////////////////////////////////  INPUT  //////////////////////////  HANDLING  ///////////////////////////////////////
 	if (!in.kb.ctrl.pressed_now) {
-		if (in.kb['B'].just_pressed) {
-			m_state = PWS_B;}
+		if (in.kb['B'].just_pressed) {		// переключения на новые инструменты (состояния)
+			m_state = PWS_B;}	// кисть
 		if (in.kb['I'].just_pressed) {
-			m_state = PWS_I;}
+			m_state = PWS_I;}	// пипетка
 		if (in.kb['Z'].just_pressed) {
-			m_state = PWS_Z;}
+			m_state = PWS_Z;}	// лупа
 		if (in.kb['E'].just_pressed) {
-			m_state = PWS_E;}
+			m_state = PWS_E;}	// ластик
 		if (in.kb['M'].just_pressed) {
-			m_state = PWS_M;}
+			m_state = PWS_M;}	// выделение прямоугольной обл
 		if (in.kb['V'].just_pressed) {
-			m_state = PWS_V;}
+			m_state = PWS_V;}	// перемещение буффера обмена
 		if (in.kb['W'].just_pressed) {
-			m_state = PWS_W;}
+			m_state = PWS_W;}	// выделение одноцветных областей
 		if (in.kb['U'].just_pressed) {
-			m_state = PWS_U;}
-		if (in.kb['C'].just_pressed) {
+			m_state = PWS_U;}	// изменение цвета выделенной области
+		if (in.kb['C'].just_pressed) {	// нормировка
 			m_pos = v2i(0,0); make_commit ();}
 		if (in.kb['H'].just_pressed) {
-			m_bg_is_dark = !m_bg_is_dark;}
+			m_bg_is_dark = !m_bg_is_dark;} // темный / светлый фон
 	} else {
-		if (in.kb['Z'].just_pressed) {
+		if (in.kb['Z'].just_pressed) { // ctrl + Z
+			checkout (); // отмена
+		}
+		if (in.kb['Y'].just_pressed && m_cur_history < m_history.size () - 1) {		// Ctrl + Y
+			m_cur_history += 2;							// восстановление
 			checkout ();
 		}
-		if (in.kb['Y'].just_pressed && m_cur_history < m_history.size () - 1) {
-			m_cur_history += 2;
-			checkout ();
-		}
-		if (in.kb['A'].just_pressed || in.kb['D'].just_pressed) {
+		if (in.kb['A'].just_pressed || in.kb['D'].just_pressed) { // Ctrl+A || Ctrl + D  выделить все, или снять выделение полностью
 			FOR_ARRAY_2D (v, m_mask) {
 				m_mask[v] = in.kb['A'].just_pressed;
 			}
 			make_commit ();
 		}
-		if (in.kb['C'].just_pressed) {
+		if (in.kb['C'].just_pressed) {		// копировать
 			v2i v1 (320, 240), v2 (0,0);
 			FOR_ARRAY_2D (v, m_mask) {
 				if (m_mask[v] && D_CUR[v].a) {
@@ -190,7 +209,7 @@ void picture_wind::update (State state, float dt) {
 				}
 			}
 		}
-		if (in.kb['X'].just_pressed) {
+		if (in.kb['X'].just_pressed) {		// вырезать
 			v2i v1 (320, 240), v2 (0,0);
 			FOR_ARRAY_2D (v, m_mask) {
 				if (m_mask[v] && D_CUR[v].a) {
@@ -221,7 +240,7 @@ void picture_wind::update (State state, float dt) {
 				}
 			}
 		}
-		if (in.kb['V'].just_pressed) {
+		if (in.kb['V'].just_pressed) {	// вставить
 			if (m_clipboard.m_initiated) {
 				if (!in.kb.shift.pressed_now) {
 					m_layers.push_back (rgba_array ());
@@ -242,7 +261,7 @@ void picture_wind::update (State state, float dt) {
 				}
 			}
 		}
-		if (in.kb['S'].just_pressed) {
+		if (in.kb['S'].just_pressed) {  // сохранить
 			vector <unsigned char> image;
 			rgba_array rgb;
 			rgb.init (D_W, D_H);
@@ -255,7 +274,7 @@ void picture_wind::update (State state, float dt) {
 			memcpy (&image[0], rgb, D_W * D_H * 4);
 			auto err = lodepng::encode (Texture_name ("out"), image, D_W, D_H);
 		}
-		if (in.kb['M'].just_pressed) {
+		if (in.kb['M'].just_pressed) {  // слить слои
 			if (m_cur_layer < m_layers.size () - 1) {
 				D_CUR.draw (&m_layers[m_cur_layer+1], v2i(0,0));
 				for (int i = m_cur_layer + 1; i < m_layers.size ()-1; ++i) {
@@ -265,11 +284,11 @@ void picture_wind::update (State state, float dt) {
 				make_commit ();
 			}
 		}
-		if (in.kb['P'].just_pressed && !dont_enter_pause) {
+		if (in.kb['P'].just_pressed && !dont_enter_pause) {  // пауза
 			m_state = PWS_PAUSE;
 		}
 	}
-	if (in.kb.delete_.just_pressed) {
+	if (in.kb.delete_.just_pressed) { // обратить выделенные пиксели в прозрачные
 		FOR_ARRAY_2D (v, m_mask) {
 			if (m_mask[v]) {
 				D_CUR[v].a = 0;
@@ -303,7 +322,6 @@ void picture_wind::update (State state, float dt) {
 	}
 	////////////////////////  END  ////////  OF  //////////////  INPUT  /////////////////////////  HANDLING  //////////////////////
 
-	m_i_color_show = false;
 	if (in.kb.space.just_pressed) {
 		m_space_pos = in.mouse.pos;
 		m_space_pict_pos = m_pos;
@@ -325,7 +343,7 @@ void picture_wind::update (State state, float dt) {
 		}
 	}
 	///////////////////////// SWITCH /////////////////////////////////////////////////////////////////////////////////////////////////////
-	switch (m_state) {
+	switch (m_state) {  // переключаемся на работу в режиме текущего состояния (в зависимости от текущего инструмента выполняем соответствующие действия)
 	case PWS_B:
 		if (D_CUR << pos && D_ACT) {
 			if (in.mouse.mbutton[MOUSE_LEFT].pressed_now || in.mouse.mbutton[MOUSE_RIGHT].pressed_now) {
@@ -383,7 +401,6 @@ void picture_wind::update (State state, float dt) {
 			if (in.mouse.mbutton[MOUSE_RIGHT].pressed_now) {
 				m_color2 = rc;
 			}
-			m_i_color_show = true;
 			FOR_ARRAY_2D (v, m_i_color) {
 				int w = m_i_color.get_H (), w4 = w/4;
 				if (v.x < w4 || v.x >= (w - w4) || v.y < w4 || v.y >= (w - w4)) {
@@ -477,7 +494,7 @@ void picture_wind::update (State state, float dt) {
 			static v2i cb_start;
 			static bool end = false;
 			if (in.mouse.mbutton[MOUSE_LEFT].just_pressed) {
-				if (m_mask[pos]) {
+				if (m_mask << pos && m_mask[pos]) {
 					start = pos;
 					cb_start = m_clipboard_pos;
 					end = false;
@@ -640,7 +657,7 @@ void picture_wind::update (State state, float dt) {
 }
 
 void picture_wind::clean () {
-	//PUT YOUR CODE HERE
+	
 }
 
 void picture_wind::load () {

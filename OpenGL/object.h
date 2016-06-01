@@ -3,6 +3,7 @@
 #include "type.h"
 #include "fadma.h"
 
+// объект. Сферический. в вакууме...
 struct Object {
 	Type m_type;
 

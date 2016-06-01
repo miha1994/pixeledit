@@ -2,6 +2,7 @@
 #include "fadma.h"
 #include "picture_wind.h"
 
+// фабрика объектов
 Object *new_Object (string id) {
 	SWITCH (id)
 	CASE ("picture_wind") {
