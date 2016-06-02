@@ -29,6 +29,7 @@ void Renderer::draw_everything () {
 #undef def
 #undef ma
 	}
+	// end of code of old school screen effect
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);

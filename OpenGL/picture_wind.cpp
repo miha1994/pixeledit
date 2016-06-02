@@ -344,8 +344,8 @@ void picture_wind::update (State state, float dt) {
 	}
 	///////////////////////// SWITCH /////////////////////////////////////////////////////////////////////////////////////////////////////
 	switch (m_state) {  // переключаемс€ на работу в режиме текущего состо€ни€ (в зависимости от текущего инструмента выполн€ем соответствующие действи€)
-	case PWS_B:
-		if (D_CUR << pos && D_ACT) {
+	case PWS_B:		// ксить
+		if (D_CUR << pos && D_ACT) {	// рисуем точку, если нужно
 			if (in.mouse.mbutton[MOUSE_LEFT].pressed_now || in.mouse.mbutton[MOUSE_RIGHT].pressed_now) {
 				v2i shift = v2i ((m_brush_size)/2, (m_brush_size)/2);
 				FOR_2D (v, m_brush_size, m_brush_size) {
@@ -360,18 +360,18 @@ void picture_wind::update (State state, float dt) {
 				m_commit_need = true;
 			}
 		}
-		if (in.kb.dirs[D_UP].just_pressed || in.kb.dirs[D_DOWN].just_pressed) {
+		if (in.kb.dirs[D_UP].just_pressed || in.kb.dirs[D_DOWN].just_pressed) {		// мен€ем размер кисти, если нужно
 			m_brush_size += (in.kb.ctrl.pressed_now ? 5 : 1) * (in.kb.dirs[D_UP].just_pressed ? 1 : -1);
 			m_brush_size = Max (m_brush_size, 1);
 		}
-		if (in.kb.dirs[D_RIGHT].just_pressed || in.kb.dirs[D_LEFT].just_pressed) {
+		if (in.kb.dirs[D_RIGHT].just_pressed || in.kb.dirs[D_LEFT].just_pressed) {	// мен€ем прозрачность, если нужно
 			int a = m_color1.a;
 			a += (in.kb.ctrl.pressed_now ? 5 : 1) * (in.kb.dirs[D_RIGHT].just_pressed ? 10 : -10);
 			m_color2.a = m_color1.a = Min (255, Max (0, a));
 		}
 		break;
-	case PWS_E:
-		if (D_CUR << pos && D_ACT) {
+	case PWS_E:		// ластик
+		if (D_CUR << pos && D_ACT) {		// стираем пиксели текущего сло€, если нужно
 			if (in.mouse.mbutton[MOUSE_LEFT].pressed_now) {
 				v2i shift = v2i ((m_erase_size)/2, (m_erase_size)/2);
 				FOR_2D (v, m_erase_size, m_erase_size) {
@@ -386,12 +386,12 @@ void picture_wind::update (State state, float dt) {
 				m_commit_need = true;
 			}
 		}
-		if (in.kb.dirs[D_UP].just_pressed || in.kb.dirs[D_DOWN].just_pressed) {
+		if (in.kb.dirs[D_UP].just_pressed || in.kb.dirs[D_DOWN].just_pressed) {		// мен€ем размер ластика, если нужно
 			m_erase_size += (in.kb.ctrl.pressed_now ? 5 : 1) * (in.kb.dirs[D_UP].just_pressed ? 1 : -1);
 			m_erase_size = Max (m_erase_size, 1);
 		}
 		break;
-	case PWS_I:
+	case PWS_I:		// пипетка
 		if (D_CUR << pos && D_ACT) {
 			CLR rc = D_CUR[pos];
 			rc.a = 255;
@@ -412,7 +412,7 @@ void picture_wind::update (State state, float dt) {
 			m_i_color_pos = in.mouse.pos - v2i(10,10) - v2i (m_i_color.get_H ()/2, m_i_color.get_H ()/2);
 		}
 		break;
-	case PWS_Z:
+	case PWS_Z:		// лупа
 		if (D_CUR << pos && D_ACT) {
 			v2i ps = in.mouse.pos - v2i (10,10);
 			if (in.mouse.mbutton[MOUSE_LEFT].just_pressed) {
@@ -435,7 +435,7 @@ void picture_wind::update (State state, float dt) {
 			}
 		}
 		break;
-	case PWS_M:
+	case PWS_M:		// пр€моугольное выделение
 		if (D_CUR << pos && D_ACT) {
 			static v2i start;
 			if (in.mouse.mbutton[MOUSE_LEFT].just_pressed || in.mouse.mbutton[MOUSE_RIGHT].just_pressed) {
@@ -486,7 +486,7 @@ void picture_wind::update (State state, float dt) {
 #undef add
 		}
 		break;
-	case PWS_V:
+	case PWS_V:		// перемещение вставленного буфера обмена
 		if (!m_draw_clipboard) {
 			break;
 		} else {
@@ -517,7 +517,7 @@ void picture_wind::update (State state, float dt) {
 			}
 		}
 		break;
-	case PWS_W:
+	case PWS_W:		// выделение областей с одинаковым цветом
 		if (in.mouse.mbutton[MOUSE_LEFT].just_pressed || in.mouse.mbutton[MOUSE_RIGHT].just_pressed) {
 			CLR sm = D_CUR[pos];
 
@@ -556,7 +556,7 @@ void picture_wind::update (State state, float dt) {
 			}
 		}
 		break;
-	case PWS_U:
+	case PWS_U:		// изменение цвета выделенной области
 		Rect <int> r (v2i (240, 0), m_color_panel.get_WH ());
 		if (r << in.mouse.pos) {
 			v2i v = in.mouse.pos - r.pos;
@@ -609,7 +609,7 @@ void picture_wind::update (State state, float dt) {
 	}
 #define add  if (m_mask_bounds << bv) {bc = int((bv.x+b_time)/2 + (bv.y + b_time)/2) % 2 ? CLR (0,0,0,194) : CLR (255,255,255,194); \
 	m_mask_bounds[bv] = bc; }
-	{
+	{			// построение массива m_mask_bounds
 		m_mask_bounds.clear (CLR(0,0,0,0));
 		v2i r;
 		CLR bc;
@@ -661,6 +661,7 @@ void picture_wind::clean () {
 }
 
 void picture_wind::load () {
+	// инициализаци€ всего и вс€
 	m_layers.push_back (rgba_array ());
 	m_layers[0].alpha_matters = true;
 	m_cur_layer = 0;
@@ -722,7 +723,7 @@ void picture_wind::load () {
 	m_cur_history = 0;
 }
 
-void picture_wind::make_commit () {
+void picture_wind::make_commit () {			// создать коммит
 	commit nw (m_layers, m_pos, m_scale, m_cur_layer, m_mask, m_draw_clipboard);
 	++m_cur_history;
 	if (m_cur_history == m_history.size ()) {
@@ -732,7 +733,7 @@ void picture_wind::make_commit () {
 	}
 }
 
-void picture_wind::checkout () {
+void picture_wind::checkout () {			// вернутьс€ на предыдущий коммит
 	--m_cur_history;
 	if (m_cur_history >= 0){
 		m_layers = m_history[m_cur_history].m_layers;
