@@ -129,7 +129,7 @@ void CompileShaders()
 
 void glut_initialization () {
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
-	glutInitWindowSize(D_W * 4, D_H * 4);
+	glutInitWindowSize(D_W * D_SCALE, D_H * D_SCALE);
 	glutInitWindowPosition(D_X_INIT, D_Y_INIT);
     glutCreateWindow("Tutorial 06");
 	if (g_fullscreen) {

@@ -1,35 +1,144 @@
-﻿Build started 29.05.2016 17:43:37.
+﻿Build started 03.06.2016 15:48:46.
      1>Project "C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"D:\SFML-2.3.1\include" /ID:\freeglut\include /I"D:\glew-1.13.0\include" /ZI /nologo /W3 /WX- /Od /Oy- /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt picture_wind.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"D:\SFML-2.3.1\include" /ID:\freeglut\include /I"D:\glew-1.13.0\include" /ZI /nologo /W3 /WX- /Od /Oy- /D SFML_STATIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt animation.cpp picture_wind.cpp
          picture_wind.cpp
      1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(194): warning C4005: 'FOR' : macro redefinition
                  c:\users\user\documents\visual studio 2012\projects\opengl\opengl\fadma.h(25) : see previous definition of 'FOR'
      1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\hot_vars.h(54): warning C4005: 'D_' : macro redefinition
                  c:\users\user\documents\visual studio 2012\projects\opengl\opengl\glob.h(12) : see previous definition of 'D_'
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(63): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(89): error C2677: binary '[' : no global operator found which takes type 'Vector2<T>' (or there is no acceptable conversion)
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(99): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(132): warning C4244: 'argument' : conversion from 'double' to 'sf::Uint8', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(147): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(159): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(170): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(201): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(281): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(331): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : see declaration of 'fopen'
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(350): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(352): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(494): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(503): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(536): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(537): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(615): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(637): warning C4244: '=' : conversion from 'double' to 'sf::Uint8', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(640): warning C4244: '*=' : conversion from 'double' to 'sf::Uint8', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(704): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(712): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(720): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(728): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(808): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : see declaration of 'fopen'
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(810): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(237) : see declaration of 'fscanf'
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(812): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(185): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(184) : while compiling class template member function 'Vector2<T> Vector2<T>::operator *(const float)'
                  with
                  [
                      T=int
                  ]
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(89): warning C4244: 'argument' : conversion from 'double' to 'sf::Uint8', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(99): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(102): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(108): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(133): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(182): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(336): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(345): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(378): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(379): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(457): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(517): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(525): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(533): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(541): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>Done Building Project "C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\OpenGL\OpenGL.vcxproj" (Build target(s)) -- FAILED.
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(99) : see reference to function template instantiation 'Vector2<T> Vector2<T>::operator *(const float)' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\array_2d.h(67) : see reference to class template instantiation 'Vector2<T>' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\array_2d.h(147) : see reference to class template instantiation 'array_2d<T>' being compiled
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(190): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(189) : while compiling class template member function 'Vector2<T> Vector2<T>::operator /(const float)'
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\picture_wind.cpp(170) : see reference to function template instantiation 'Vector2<T> Vector2<T>::operator /(const float)' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+         animation.cpp
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(194): warning C4005: 'FOR' : macro redefinition
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\fadma.h(25) : see previous definition of 'FOR'
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\animation.cpp(9): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\animation.cpp(55): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(190): warning C4244: 'argument' : conversion from 'const float' to 'int', possible loss of data
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\math_3d.h(189) : while compiling class template member function 'Vector2<T> Vector2<T>::operator /(const float)'
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\animation.cpp(9) : see reference to function template instantiation 'Vector2<T> Vector2<T>::operator /(const float)' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\array_2d.h(67) : see reference to class template instantiation 'Vector2<T>' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\user\documents\visual studio 2012\projects\opengl\opengl\array_2d.h(147) : see reference to class template instantiation 'array_2d<T>' being compiled
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\OpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\SFML-2.3.1\lib" /LIBPATH:D:\freeglut\lib /LIBPATH:"D:\glew-1.13.0\lib" "sfml-graphics-s-d.lib" "sfml-window-s-d.lib" "sfml-system-s-d.lib" "sfml-audio-s-d.lib" "sfml-main.lib" freeglut.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\OpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\OpenGL.lib" /MACHINE:X86 Debug\animation.obj
+         Debug\core.obj
+         Debug\direction.obj
+         Debug\fadma.obj
+         Debug\glob.obj
+         Debug\hot_vars.obj
+         Debug\input.obj
+         Debug\lodepng.obj
+         Debug\main.obj
+         Debug\math.obj
+         Debug\object.obj
+         Debug\picture_wind.obj
+         Debug\pure_opengl.obj
+         Debug\read_write.obj
+         Debug\Renderer.obj
+         Debug\rgba_array.obj
+         Debug\space.obj
+         Debug\animation.obj
+     1>Debug\animation.obj : warning LNK4042: object specified more than once; extras ignored
+     1>sfml-graphics-s-d.lib(Color.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-graphics-s-d.lib(Color.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(Context.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(Context.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(GlContext.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(GlContext.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(GlResource.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(GlResource.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(Joystick.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(Joystick.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(JoystickManager.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(JoystickManager.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(Keyboard.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(Keyboard.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(Mouse.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(Mouse.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(SensorManager.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(SensorManager.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(VideoMode.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(VideoMode.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(Window.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(Window.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(WindowImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(WindowImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(WglContext.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(WglContext.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(WglExtensions.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(WglExtensions.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(InputImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(InputImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(JoystickImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(JoystickImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(SensorImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(SensorImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(VideoModeImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(VideoModeImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-window-s-d.lib(WindowImplWin32.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-window-s-d.lib(WindowImplWin32.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(Clock.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(Clock.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(Err.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(Err.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(Lock.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(Lock.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(Mutex.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(Mutex.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(Sleep.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(Sleep.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(String.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(String.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(ThreadLocal.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(ThreadLocal.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(Time.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(Time.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(ClockImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(ClockImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(MutexImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(MutexImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(SleepImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(SleepImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+     1>sfml-system-s-d.lib(ThreadLocalImpl.cpp.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'sfml-system-s-d.lib(ThreadLocalImpl.cpp.obj)' or at 'C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\vc110.pdb'; linking object as if no debug info
+         OpenGL.vcxproj -> C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\Debug\OpenGL.exe
+     1>Done Building Project "C:\Users\User\Documents\Visual Studio 2012\Projects\OpenGL\OpenGL\OpenGL.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:03.77
+Time Elapsed 00:00:11.76

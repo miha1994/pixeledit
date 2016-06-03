@@ -33,7 +33,7 @@ Rect <int> g_sq_r (v2i (10,10), v2i (220, 220));
 // активен ли сейчас основной квадрат? (находится ли курсор в нем?)
 #define D_ACT	g_sq_r << in.mouse.pos
 
-rgba_array lrs[20];		// миниатюры слоев
+rgba_array lrs[50];		// миниатюры слоев
 
 commit& commit::operator = (const commit& r) {
 	m_layers = r.m_layers;
@@ -42,6 +42,7 @@ commit& commit::operator = (const commit& r) {
 	m_cur_layer = r.m_cur_layer;
 	m_mask = r.m_mask;
 	m_draw_clipboard = r.m_draw_clipboard;
+	m_animation_mode = r.m_animation_mode;
 	return (*this);
 }
 
@@ -53,25 +54,44 @@ void picture_wind::render (State state) {
 	// если был добавлен или удален слой, то соответственно добавляем или удаляем миниатюру
 	if (m_layers_miniatures.size() != m_layers.size ()) {
 		if (m_layers_miniatures.size() < m_layers.size ()) {
-			m_layers_miniatures.push_back (rgba_array ());
-			m_layers_miniatures.back ().init (220,220);
-			m_layers_miniatures.back ().alpha_matters = true;
+			while (m_layers_miniatures.size() < m_layers.size ()) {
+				m_layers_miniatures.push_back (rgba_array ());
+				m_layers_miniatures.back ().init (220,220);
+				m_layers_miniatures.back ().alpha_matters = true;
+			}
 		} else {
 			m_layers_miniatures.pop_back ();
 		}
 	}
 
 	// рисуем слои в основной квадрат
-	int count = 0;
-	forstl_p (p, m_layers) {
-		m_main_sq.draw (&p, m_pos, m_scale);
-		if (m_state == PWS_U && count == m_cur_layer) {		// если меняем цвет выделенной области, рисуемнеявный слой цвета
-			m_main_sq.draw (&m_u_mask, m_pos, m_scale);
-		}
-		m_layers_miniatures[count].clear (CLR (0,0,0,0));	// не забываем про создание миниатюр
-		m_layers_miniatures[count].draw (&p, m_pos, m_scale);
+	if (!m_animation_mode) {
+		int count = 0;
+		forstl_p (p, m_layers) {
+			m_main_sq.draw (&p, m_pos, m_scale);
+			if (m_state == PWS_U && count == m_cur_layer) {		// если меняем цвет выделенной области, рисуемнеявный слой цвета
+				m_main_sq.draw (&m_u_mask, m_pos, m_scale);
+			}
+			m_layers_miniatures[count].clear (CLR (0,0,0,0));	// не забываем про создание миниатюр
+			m_layers_miniatures[count].draw (&p, m_pos, m_scale);
 
-		++count;
+			++count;
+		}
+	} else {
+		if (m_animation.m_prev_layer_half_transparent.m_initiated) {
+			m_main_sq.draw (&m_animation.m_prev_layer_half_transparent, m_pos, m_scale);
+		}
+		m_main_sq.draw (&D_CUR, m_pos, m_scale);
+		int count = 0;
+		forstl_p (p, m_layers) {
+			if (m_state == PWS_U && count == m_cur_layer) {		// если меняем цвет выделенной области, рисуемнеявный слой цвета
+				m_main_sq.draw (&m_u_mask, m_pos, m_scale);
+			}
+			m_layers_miniatures[count].clear (CLR (0,0,0,0));	// не забываем про создание миниатюр
+			m_layers_miniatures[count].draw (&p, m_pos, m_scale);
+
+			++count;
+		}
 	}
 
 	// при необходимости выводим содержание буфера обмена в основной квадрат
@@ -96,7 +116,7 @@ void picture_wind::render (State state) {
 	D_ADD_SPRITE (m_color_panel, v2i (240,0));	// панель цветов
 	D_ADD_SPRITE (m_mask_bounds, v2i (0,0));	// границы выделяемых и выделенных областей
 	D_ADD_SPRITE (m_bounds, v2i (0,0));
-	count = 0;
+	int count = 0;
 	forstl_p (p, m_layers_miniatures) {			// миниатюры
 		lrs[count].clear (count == m_cur_layer ? CLR::Red : CLR::Black);
 		int r, g, b, a;
@@ -111,16 +131,19 @@ void picture_wind::render (State state) {
 			}
 			lrs[count][v+ v2i (1,1)] = CLR (r/ 100.0, g/ 100.0, b / 100.0, a / 100.0);
 		}
-		D_ADD_SPRITE (lrs[count], v2i (296, 67 + count * 24));
-		if (left.just_pressed && Rect <int> (v2i (296, 67 + count * 24), v2i (24,24)) << in.mouse.pos) {
+		D_ADD_SPRITE (lrs[count], v2i (296, 67 + count * (m_layers_miniatures.size () > 5 ? 6 : 24)));
+		if (left.just_pressed && Rect <int> (v2i (296, 67 + count * (m_layers_miniatures.size () > 5 ? 6 : 24)), v2i (24,24)) << in.mouse.pos) {
 			m_cur_layer = count;
 		}
 		++count;
 	}
+	if (m_animation_mode) {
+		m_animation.render ();
+	}
 }
 
 void picture_wind::update (State state, float dt) {
-	sf::sleep (sf::milliseconds (10));	// разгружаем цпу
+	sf::sleep (sf::milliseconds (5));	// разгружаем цпу
 	b_time += dt + 0.015;		// вычисляем статистику
 	++count_;	// статистика
 	bool dont_enter_pause = false;
@@ -134,6 +157,10 @@ void picture_wind::update (State state, float dt) {
 	}
 	if (in.kb.escape.pressed_now) {		// нажат эскейп - выходим
 		exit (count_ / b_time);
+	}
+
+	if (m_animation_mode) {
+		m_animation.update (dt);
 	}
 
 	// сокращения для левой и правой клавишь мыши
@@ -161,6 +188,8 @@ void picture_wind::update (State state, float dt) {
 			m_state = PWS_W;}	// выделение одноцветных областей
 		if (in.kb['U'].just_pressed) {
 			m_state = PWS_U;}	// изменение цвета выделенной области
+		if (in.kb['A'].just_pressed) {
+			m_state = PWS_A;}
 		if (in.kb['C'].just_pressed) {	// нормировка
 			m_pos = v2i(0,0); make_commit ();}
 		if (in.kb['H'].just_pressed) {
@@ -262,17 +291,60 @@ void picture_wind::update (State state, float dt) {
 			}
 		}
 		if (in.kb['S'].just_pressed) {  // сохранить
-			vector <unsigned char> image;
-			rgba_array rgb;
-			rgb.init (D_W, D_H);
-			rgb.alpha_matters = true;
-			rgb.clear (CLR(0,0,0,0));
+			v2i minimum (D_W, D_H), maximum (0,0);
+
 			forstl_p (p, m_layers) {
-				rgb.draw (&p, v2i(0,0));
+				FOR_ARRAY_2D (v, p) {
+					if (p[v].a) {
+						if (v.x > maximum.x) {
+							maximum.x = v.x;
+						}
+						if (v.y > maximum.y) {
+							maximum.y = v.y;
+						}
+						if (v.x < minimum.x) {
+							minimum.x = v.x;
+						}
+						if (v.y < minimum.y) {
+							minimum.y = v.y;
+						}
+					}
+				}
 			}
-			image.assign (D_W * D_H * 4, 0);
-			memcpy (&image[0], rgb, D_W * D_H * 4);
-			auto err = lodepng::encode (Texture_name ("out"), image, D_W, D_H);
+			maximum += v2i (1,1);
+			v2i size (maximum - minimum);
+
+			vector <unsigned char> image;
+			rgba_array rgb (true);
+
+			if (!m_animation_mode) {	
+				rgb.init (size.x, size.y);
+				rgb.clear (CLR(0,0,0,0));
+				forstl_p (p, m_layers) {
+					rgb.draw (&p, v2i(0,0), 1, size, minimum);
+				}
+				int w = rgb.m_W, h = rgb.m_H;
+				image.assign (w * h * 4, 0);
+				memcpy (&image[0], rgb, w * h * 4);
+				auto err = lodepng::encode (Texture_name (S_[0]), image, w, h);
+			} else {
+				FILE *wrt = fopen ((prefix_path + "tex/" + S_[0] + "_info.an").c_str (), "w");
+				fprintf (wrt, "%d %d", size.x, size.y);
+				fclose (wrt);
+
+				rgb.init (size.x * m_layers.size (), size.y);
+				rgb.clear (CLR(0,0,0,0));
+				int i = 0;
+				forstl_p (p, m_layers) {
+					rgb.draw (&p, v2i (i * size.x, 0), 1, size, minimum);
+					++i;
+				}
+				vector <unsigned char> image;
+				int w = rgb.m_W, h = rgb.m_H;
+				image.assign (w * h * 4, 0);
+				memcpy (&image[0], rgb, w * h * 4);
+				auto err = lodepng::encode (Texture_name (S_[0]), image, w, h);
+			}
 		}
 		if (in.kb['M'].just_pressed) {  // слить слои
 			if (m_cur_layer < m_layers.size () - 1) {
@@ -557,21 +629,32 @@ void picture_wind::update (State state, float dt) {
 		}
 		break;
 	case PWS_U:		// изменение цвета выделенной области
-		Rect <int> r (v2i (240, 0), m_color_panel.get_WH ());
-		if (r << in.mouse.pos) {
-			v2i v = in.mouse.pos - r.pos;
-			CLR c = g_8_colors[v.y/8];
-			c.a = 255.0 * (v.x / 80.0);
-			m_u_mask.clear (c);
-			FOR_ARRAY_2D (v, m_mask) {
-				m_u_mask[v].a *= m_mask[v] * D_CUR[v].a / 255.0;
+		{
+			Rect <int> r (v2i (240, 0), m_color_panel.get_WH ());
+			if (r << in.mouse.pos) {
+				v2i v = in.mouse.pos - r.pos;
+				CLR c = g_8_colors[v.y/8];
+				c.a = 255.0 * (v.x / 80.0);
+				m_u_mask.clear (c);
+				FOR_ARRAY_2D (v, m_mask) {
+					m_u_mask[v].a *= m_mask[v] * D_CUR[v].a / 255.0;
+				}
+				if (right.just_pressed) {
+					D_CUR.draw (&m_u_mask, v2i (0,0));
+					make_commit ();
+				}
+			} else {
+				m_u_mask.clear (CLR(0,0,0,0));
 			}
-			if (right.just_pressed) {
-				D_CUR.draw (&m_u_mask, v2i (0,0));
-				make_commit ();
-			}
-		} else {
-			m_u_mask.clear (CLR(0,0,0,0));
+		}
+		break;
+	case PWS_A:
+		if (!in.kb.ctrl.pressed_now && in.kb['N'].just_pressed) {
+			m_animation_mode = true;
+		} 
+		if (in.kb.dirs[D_RIGHT].just_pressed || in.kb.dirs[D_LEFT].just_pressed) {
+			m_animation.m_fps += (in.kb.ctrl.pressed_now ? 3 : 1) * (in.kb.dirs[D_RIGHT].just_pressed ? 1 : -1);
+			m_animation.m_fps = Max (1, m_animation.m_fps);
 		}
 		break;
 	}
@@ -656,12 +739,13 @@ void picture_wind::update (State state, float dt) {
 	m_old_col1 = m_color1, m_old_col2 = m_color2;
 }
 
-void picture_wind::clean () {
-	
+void picture_wind::clear () {
+	m_animation.clear ();
 }
 
 void picture_wind::load () {
 	// инициализация всего и вся
+	m_animation.init (this);
 	m_layers.push_back (rgba_array ());
 	m_layers[0].alpha_matters = true;
 	m_cur_layer = 0;
@@ -710,21 +794,50 @@ void picture_wind::load () {
 	m_draw_clipboard = false;
 	m_brush_size = 1;
 	m_erase_size = 1;
+	m_animation_mode = false;
 
 	vector <unsigned char> cpy;
 	unsigned int w, h;
-	auto err = lodepng::decode (cpy, w, h, Texture_name (S_[0]));
-	if(err) std::cout << "decoder error " << err << ": " << lodepng_error_text(err) << std::endl;
-	memcpy (D_CUR, &cpy[0], w*h*4);
+	if (I_[0]) {
+		auto err = lodepng::decode (cpy, w, h, Texture_name (S_[0]));
+		if(err) std::cout << "decoder error " << err << ": " << lodepng_error_text(err) << std::endl;
+		rgba_array rgb (true);
+		rgb.init (w,h);
+		memcpy (rgb, &cpy[0], w*h*4);
+
+		FILE *read = fopen ((prefix_path + "tex/" + S_[0] + "_info.an").c_str (), "r");
+		int rw, rh;
+		fscanf (read, "%d%d", &rw, &rh);
+
+		FOR (i, w/rw) {
+			if (i) {
+				m_layers.push_back (rgba_array (true));
+				m_layers.back ().init (D_W, D_H);
+				m_cur_layer = m_layers.size () - 1;
+			}
+			D_CUR.clear (CLR (0,0,0,0));
+			D_CUR.draw (&rgb, v2i (10, 10), 1, v2i(rw,rh), v2i (rw*i,0));
+		}
+		m_animation_mode = true;
+		fclose (read);
+	} else {
+		auto err = lodepng::decode (cpy, w, h, Texture_name (S_[0]));
+		if(err) std::cout << "decoder error " << err << ": " << lodepng_error_text(err) << std::endl;
+		rgba_array rgb (true);
+		rgb.init (w,h);
+		memcpy (rgb, &cpy[0], w*h*4);
+		D_CUR.clear (CLR(0,0,0,0));
+		D_CUR.draw (&rgb, (w >= 300 && h >= 220) ? v2i (0,0) :v2i (10,10));
+	}
 	//D_CUR.clear (CLR(0,0,0,0));
 	read_string (); // "}"
 
-	m_history.push_back (commit (m_layers, m_pos, m_scale, m_cur_layer, m_mask, m_draw_clipboard));
+	m_history.push_back (commit (m_layers, m_pos, m_scale, m_cur_layer, m_mask, m_draw_clipboard, m_animation_mode));
 	m_cur_history = 0;
 }
 
 void picture_wind::make_commit () {			// создать коммит
-	commit nw (m_layers, m_pos, m_scale, m_cur_layer, m_mask, m_draw_clipboard);
+	commit nw (m_layers, m_pos, m_scale, m_cur_layer, m_mask, m_draw_clipboard, m_animation_mode);
 	++m_cur_history;
 	if (m_cur_history == m_history.size ()) {
 		m_history.push_back (nw);
@@ -742,6 +855,9 @@ void picture_wind::checkout () {			// вернуться на предыдущий коммит
 		m_cur_layer = m_history[m_cur_history].m_cur_layer;
 		m_mask = m_history[m_cur_history].m_mask;
 		m_draw_clipboard = m_history[m_cur_history].m_draw_clipboard;
+		m_animation_mode = m_history[m_cur_history].m_animation_mode;
+
+		m_animation.m_current_frame = 0;
 	} else {
 		m_cur_history = 0;
 	}

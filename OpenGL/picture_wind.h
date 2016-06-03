@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "glob.h"
 #include "array_2d.h"
+#include "animation.h"
 
 // состояния нашего эдитора
 enum PICTURE_WIND_STATES {
@@ -15,6 +16,7 @@ enum PICTURE_WIND_STATES {
 	PWS_V,	// перемещение вставленного из clipboard набора пикселей, текстуры
 	PWS_W,	// выделение пикселей одного цвета
 	PWS_U,	// изменение цвета в выделенной области
+	PWS_A,
 	PWS_PAUSE	// пауза (нужна для того, чтобы эдитор не реагировал на нажатия кнопок пока мы открыли гугл и смотрим смешные видосики)
 };
 
@@ -25,16 +27,18 @@ struct commit {
 	int m_scale;					// масштаб
 	int m_cur_layer;				// номер активного слоя
 	bool m_draw_clipboard;			// рисовать ли clipboard?
+	bool m_animation_mode;
 	array_2d <bool> m_mask;			// маска выделения
 	commit& operator = (const commit& r);	// оператор присваивания
 	commit () {}					// пустой конструктор
-	commit (vector <rgba_array >_m_layers, v2i _m_pos, int _m_scale, int _m_cur_layer, array_2d <bool> _m_mask, bool _m_draw_clipboard) {
+	commit (vector <rgba_array >_m_layers, v2i _m_pos, int _m_scale, int _m_cur_layer, array_2d <bool> _m_mask, bool _m_draw_clipboard, bool _m_animation_mode) {
 		m_layers = _m_layers;
 		m_pos = _m_pos;
 		m_scale = _m_scale;
 		m_cur_layer = _m_cur_layer;
 		m_mask = _m_mask;
 		m_draw_clipboard = _m_draw_clipboard;
+		m_animation_mode = _m_animation_mode;
 	}
 };
 
@@ -53,6 +57,7 @@ struct picture_wind : Object {
 	rgba_array m_clipboard;		// буфер обмена. по сути хранит куски изображений, которые можно затем вставить. Попадают туда эти куски благодаря Ctrl + C
 	rgba_array m_u_mask;		// псевдослой, неявно создающийся при изменении цвета выделенной области (инструмент U)
 	array_2d <bool> m_mask;		// маска выделенной области (пиксели, которые входят в выделенную область помечены единицами)
+	animation m_animation;
 	v2i m_pos;				// смещение / позиция рисунка относительно основного квадрата
 	int m_scale;			// масштаб
 	int m_cur_layer;		// активный слой
@@ -66,13 +71,14 @@ struct picture_wind : Object {
 	bool m_commit_need;				// нужно ли будет в конце апдэйта сделать коммит?
 	bool m_bg_is_dark;				// темный фот?
 	bool m_draw_clipboard;			// выводить на экран содержимое буффера обмена? (был ли только что он вставлен? (Ctrl + V))
+	bool m_animation_mode;
 	v2i m_clipboard_pos;			// расположение буфера обмена
 	int m_brush_size;				// размер кисти
 	int m_erase_size;				// размер ластика
 
 	void render (State state);		// ну эти функции уже где только не были...
 	void update (State state, float dt);
-	void clean ();
+	void clear ();
 	void load ();
 
 	void make_commit ();			// закоммититься

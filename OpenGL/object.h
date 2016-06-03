@@ -9,7 +9,7 @@ struct Object {
 
 	virtual void render (State state) = 0;
 	virtual void update (State state, float dt) = 0;
-	virtual void clean () = 0;
+	virtual void clear () = 0;
 	virtual void load () = 0;
 
 	Object () {}

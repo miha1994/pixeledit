@@ -126,7 +126,9 @@ public:
 		return (*this);
 	}
 	// пустой конструктор
-	array_2d () : m_initiated (false) {}
+	array_2d () {
+		m_initiated = false;
+	}
 	~array_2d () {
 		if (m_initiated) {
 			delete []m_a;
@@ -149,6 +151,7 @@ struct rgba_array : public array_2d <CLR> {
 	bool alpha_matters;  // обращать ли внимание на прозрачность при его рисовании?
 	void draw (rgba_array *src, v2i pos);	// нарисовать на this массив src в точке приложения pos
 	void draw (rgba_array *src, v2i pos, int scale, v2i max_size = v2i (0,0)); // отрисовка с масштабом и максимальным размером рендеринга
+	void draw (rgba_array *src, v2i pos, int scale, v2i max_size, v2i src_start);
 	rgba_array (bool _alpha_matters = 0) { // конструктор
 		alpha_matters = _alpha_matters;
 	}
