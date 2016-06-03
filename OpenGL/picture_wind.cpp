@@ -93,6 +93,15 @@ void picture_wind::render (State state) {
 			++count;
 		}
 	}
+	if (m_grid_cell_size.x > 1 && m_grid_cell_size.y > 1 && m_scale > 1) {
+		m_grid.clear (CLR(0,0,0,0));
+		FOR_ARRAY_2D (v, m_grid) {
+			if (!((v.x - m_pos.x) %  (m_scale * m_grid_cell_size.x)) || !((v.y - m_pos.y) % (m_scale * m_grid_cell_size.y))) {
+				m_grid[v] = CLR::Black;
+			}
+		}
+		m_main_sq.draw (&m_grid, v2i(0,0));
+	}
 
 	// при необходимости выводим содержание буфера обмена в основной квадрат
 	if (m_draw_clipboard) {
@@ -190,6 +199,8 @@ void picture_wind::update (State state, float dt) {
 			m_state = PWS_U;}	// изменение цвета выделенной области
 		if (in.kb['A'].just_pressed) {
 			m_state = PWS_A;}
+		if (in.kb['G'].just_pressed) {
+			m_state = PWS_G;}
 		if (in.kb['C'].just_pressed) {	// нормировка
 			m_pos = v2i(0,0); make_commit ();}
 		if (in.kb['H'].just_pressed) {
@@ -657,6 +668,16 @@ void picture_wind::update (State state, float dt) {
 			m_animation.m_fps = Max (1, m_animation.m_fps);
 		}
 		break;
+	case PWS_G:
+		if (in.kb.up.just_pressed || in.kb.down.just_pressed) {
+			m_grid_cell_size.x += in.kb.up.just_pressed ? 1 : -1;
+		}
+		if (in.kb.right.just_pressed || in.kb.left.just_pressed) {
+			m_grid_cell_size.y += in.kb.right.just_pressed ? 1 : -1;
+		}
+		m_grid_cell_size.x = Max (m_grid_cell_size.x, 1);
+		m_grid_cell_size.y = Max (m_grid_cell_size.y, 1);
+		break;
 	}
 	///////////////////////////////////////// END /////////////////////////// OF //////////////////////// SWITCH ////////////////////////////////////
 	if (in.mouse.mbutton[MOUSE_LEFT].just_pressed) {
@@ -795,6 +816,10 @@ void picture_wind::load () {
 	m_brush_size = 1;
 	m_erase_size = 1;
 	m_animation_mode = false;
+
+	m_grid.init (220, 220);
+	m_grid.alpha_matters = true;
+	m_grid.clear (CLR (0,0,0,0));
 
 	vector <unsigned char> cpy;
 	unsigned int w, h;
